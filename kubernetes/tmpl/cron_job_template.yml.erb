@@ -1,0 +1,33 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ev-job
+  namespace: <%= job.namespace %>
+  labels:
+    name: ev-job
+    namespace: <%= job.namespace %>
+    app: ev-job
+    role: job
+spec:
+  schedule: "5 17 * * *"
+  concurrencyPolicy: "Replace"
+  suspend: false
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+      name: ev-job
+      labels:
+        name: ev-job
+        app: ev-job
+        role: job
+    spec:
+      backoffLimit: 1
+      template:
+        metadata:
+          name: ev-job
+          labels:
+            name: ev-job
+            app: ev-job
+            role: job
+        spec: <%= spec %>

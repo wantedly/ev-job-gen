@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ev-job-xxxxx
+  namespace: ml-project-1
+  labels:
+    name: ev-job-xxxxx
+    namespace: ml-project-1
+    app: ev-job
+    role: job
+spec:
+  template:
+    metadata:
+      name: ev-job-xxxxx
+      labels:
+        name: ev-job-xxxxx
+        app: ev-job
+        role: job
+    spec: 
+      imagePullSecrets:
+      - name: wantedlybotkey
+      restartPolicy: Never
+      containers:
+      - name: ev-job
+        image: some-docker-registory/ml-project-1:latest
+        imagePullPolicy: Always
+        command:
+          - "/bin/bash"
+          - "-c"
+          - >
+            script/evaluate | tee /tmp/out.txt;
+      
+            export AWS_ACCESS_KEY_ID=;
+            export AWS_SECRET_ACCESS_KEY=;
+            export AWS_REGION=;
+      
+            wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
+            tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
+            cp linux-amd64/ev ev;
+      
+            ./ev upload --branch master \
+                        --commit ${COMMITHASH} \
+                        --out /tmp/out.txt \
+                        --metrics /tmp/metrics.json \
+                        --namespace ml-project-1;
+        envFrom:
+        - secretRef:
+            name: dotenv
+

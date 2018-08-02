@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ev-job-<%= job.suffix %>
+  namespace: <%= job.namespace %>
+  labels:
+    name: ev-job-<%= job.suffix %>
+    namespace: <%= job.namespace %>
+    app: ev-job
+    role: job
+spec:
+  template:
+    metadata:
+      name: ev-job-<%= job.suffix %>
+      labels:
+        name: ev-job-<%= job.suffix %>
+        app: ev-job
+        role: job
+    spec: <%= spec %>
