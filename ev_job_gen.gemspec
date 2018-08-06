@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Generator of kubernetes manifest file for evaluation job.}
   spec.description   = %q{Generator of kubernetes manifest file for evaluation job.}
-  spec.homepage      = "https://github.com/south37/ev-job-gen"
+  spec.homepage      = "https://github.com/wantedly/ev-job-gen"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.
