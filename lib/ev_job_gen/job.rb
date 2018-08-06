@@ -13,12 +13,22 @@ module EvJobGen
       @out        = h["out"]
       @metrics    = h["metrics"]
       @commithash = h["commithash"]
+      @setup_wget = h["setup_wget"]  # NOTE: this is optional
 
       # NOTE: suffix is used only for oneshot job
       @suffix    = 5.times.map { CHARS.sample }.join
     end
 
-    attr_reader :namespace, :image, :command, :out, :metrics, :commithash, :suffix
+    attr_reader(
+      :namespace,
+      :image,
+      :command,
+      :out,
+      :metrics,
+      :commithash,
+      :setup_wget,
+      :suffix,
+    )
 
   private
 
