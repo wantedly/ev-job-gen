@@ -1,5 +1,4 @@
-imagePullSecrets:
-- name: wantedlybotkey
+<%= config.imagePullSecrets %>
 restartPolicy: Never
 containers:
 - name: ev-job
@@ -24,6 +23,4 @@ containers:
                   --out <%= job.out %> \
                   --metrics <%= job.metrics %> \
                   --namespace <%= job.namespace %>;
-  envFrom:
-  - secretRef:
-      name: dotenv
+<%= config.containers_envFrom(offset: 2) %>

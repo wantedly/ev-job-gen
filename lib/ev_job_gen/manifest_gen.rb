@@ -1,15 +1,15 @@
 module EvJobGen
   class ManifestGen
     class << self
-      def gen(jobfile:, target:)
-        self.new(jobfile: jobfile, target: target).gen
+      def gen(jobfile:, target:, configfile:)
+        self.new(jobfile: jobfile, target: target, configfile: configfile).gen
       end
     end
 
     CRONJOB_TEMPLATE_FILE    = "cron_job_template.yml.erb"
     ONESHOTJOB_TEMPLATE_FILE = "oneshot_job_template.yml.erb"
 
-    def initialize(jobfile:, target:)
+    def initialize(jobfile:, target:, configfile:)
       case target
       when "cronjob"
         template   = File.join(EvJobGen.tmpl_dir, CRONJOB_TEMPLATE_FILE)
@@ -24,6 +24,7 @@ module EvJobGen
         template:   template,
         specoffset: specoffset,
         jobfile:    jobfile,
+        configfile: configfile,
       )
     end
 

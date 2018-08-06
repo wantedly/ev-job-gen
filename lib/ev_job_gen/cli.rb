@@ -14,7 +14,11 @@ module EvJobGen
     end
 
     def run!
-      yml = ManifestGen.gen(jobfile: @option.jobfile, target: @option.target)
+      yml = ManifestGen.gen(
+        jobfile:    @option.jobfile,
+        target:     @option.target,
+        configfile: @option.config,
+      )
       print yml
     end
   end
