@@ -35,6 +35,7 @@ describe EvJobGen do
       out: /tmp/out.txt
       metrics: /tmp/metrics.json
       commithash: ${COMMITHASH}
+      setup_wget: apt install -y wget
     EOF
     File.write(outfile, jobbody)
   end

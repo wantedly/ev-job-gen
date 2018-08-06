@@ -14,6 +14,7 @@ containers:
       export AWS_SECRET_ACCESS_KEY=<%= ENV['AWS_SECRET_ACCESS_KEY'] %>;
       export AWS_REGION=<%= ENV['AWS_REGION'] %>;
 
+      <%= job.setup_wget %>;
       wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
       tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
       cp linux-amd64/ev ev;
