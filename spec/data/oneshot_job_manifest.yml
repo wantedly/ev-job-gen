@@ -44,6 +44,6 @@ spec:
                         --metrics /tmp/metrics.json \
                         --namespace ml-project-1;
         envFrom:
-        - secretRef:
-            name: dotenv
+        - secretRef: 
+          name: dotenv
 

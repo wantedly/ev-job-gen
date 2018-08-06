@@ -12,14 +12,15 @@ module EvJobGen
       end
     end
 
-    def initialize(template:, specoffset:, jobfile:)
+    def initialize(template:, specoffset:, jobfile:, configfile:)
       @spec_renderer = ERB.new(File.read(YmlRenderer.spec_template_path))
       @specoffset    = specoffset
       @renderer      = ERB.new(File.read(template))
       @job           = EvJobGen::Job.new(jobfile)
+      @config        = EvJobGen::Config.new(configfile)
     end
 
-    attr_reader :job
+    attr_reader :job, :config
 
     def render
       spec = render_spec
