@@ -19,8 +19,85 @@ Or install it yourself as:
 
 ## Usage
 
+Place a yml file in jobs directory
+
+```yml
+# Ex. ml-project-1.yml
+namespace: ml-project-1
+image: some-docker-registory/ml-project-1:latest
+command: >
+         script/evaluate | tee /tmp/out.txt;
+out: /tmp/out.txt
+metrics: /tmp/metrics.json
+commithash: ${COMMITHASH}
+```
+
+Then execute `ev-job-gen` command.
+
 ```console
 $ ev-job-gen --jobfile jobs/ml-project-1.yml
+```
+
+It generates manifest file for cron job which executes evaluation.
+
+```yml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ev-job
+  namespace: ml-project-1
+  labels:
+    name: ev-job
+    namespace: ml-project-1
+    app: ev-job
+    role: job
+spec:
+  schedule: "5 17 * * *"
+  concurrencyPolicy: "Replace"
+  suspend: false
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+      name: ev-job
+      labels:
+        name: ev-job
+        app: ev-job
+        role: job
+    spec:
+      backoffLimit: 1
+      template:
+        metadata:
+          name: ev-job
+          labels:
+            name: ev-job
+            app: ev-job
+            role: job
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: ev-job
+            image: some-docker-registory/wantedly/ml-project-1:latest
+            imagePullPolicy: Always
+            command:
+              - "/bin/bash"
+              - "-c"
+              - >
+                script/evaluate | tee /tmp/out.txt;
+
+                export AWS_ACCESS_KEY_ID=xxx;
+                export AWS_SECRET_ACCESS_KEY=xxx;
+                export AWS_REGION=xxx;
+
+                wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
+                tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
+                cp linux-amd64/ev ev;
+
+                ./ev upload --branch master \
+                            --commit ${COMMITHASH} \
+                            --out /tmp/out.txt \
+                            --metrics /tmp/metrics.json \
+                            --namespace ml-project-1;
 ```
 
 ## Development
