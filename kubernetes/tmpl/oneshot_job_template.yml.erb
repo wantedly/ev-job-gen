@@ -9,6 +9,7 @@ metadata:
     app: ev-job
     role: job
 spec:
+  backoffLimit: 0
   template:
     metadata:
       name: ev-job-<%= job.suffix %>

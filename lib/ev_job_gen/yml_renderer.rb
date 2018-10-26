@@ -24,7 +24,8 @@ module EvJobGen
 
     def render
       spec = render_spec
-      @renderer.result(binding)
+      r = @renderer.result(binding)
+      normalize(r)
     end
 
   private
@@ -33,6 +34,10 @@ module EvJobGen
       r = @spec_renderer.result(binding)
       offset = @specoffset + 2
       "\n" + r.split("\n").map { |l| "#{' ' * offset}#{l}\n" }.join
+    end
+
+    def normalize(text)
+      text.split("\n").map { |l| l.rstrip }.map { |l| "#{l}\n" }.join
     end
   end
 end
