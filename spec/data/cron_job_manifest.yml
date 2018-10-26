@@ -9,7 +9,6 @@ metadata:
     app: ev-job
     role: job
 spec:
-  backoffLimit: 0
   schedule: "5 17 * * *"
   concurrencyPolicy: "Replace"
   suspend: false
