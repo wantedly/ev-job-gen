@@ -25,11 +25,12 @@ Place a yml file in jobs directory
 # Ex. ml-project-1.yml
 namespace: ml-project-1
 image: some-docker-registory/ml-project-1:latest
-command: >
-         script/evaluate | tee /tmp/out.txt;
+command:
+- script/evaluate | tee /tmp/out.txt
 out: /tmp/out.txt
 metrics: /tmp/metrics.json
 commithash: ${COMMITHASH}
+setup_wget: apt install -y wget
 ```
 
 Then execute `ev-job-gen` command.
