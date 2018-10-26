@@ -3,8 +3,8 @@ require 'dotenv/load'
 require 'ev_job_gen/cli'
 require 'ev_job_gen/config'
 require 'ev_job_gen/job'
-require 'ev_job_gen/yml_renderer'
 require 'ev_job_gen/manifest_gen'
+require 'ev_job_gen/renderer'
 
 module EvJobGen
   class << self

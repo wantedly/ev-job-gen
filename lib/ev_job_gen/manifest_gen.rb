@@ -20,7 +20,7 @@ module EvJobGen
       else
         raise "invalid target: #{target}"
       end
-      @renderer = YmlRenderer.new(
+      @renderer = Renderer.new(
         template:   template,
         specoffset: specoffset,
         jobfile:    jobfile,
