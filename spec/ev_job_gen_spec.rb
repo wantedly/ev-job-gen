@@ -30,8 +30,9 @@ describe EvJobGen do
     jobbody = <<~EOF
       namespace: ml-project-1
       image: some-docker-registory/ml-project-1:latest
-      command: >
-               script/evaluate | tee /tmp/out.txt;
+      command:
+      - script/evaluate | tee /tmp/out.txt
+      - cat /tmp/out.txt > /tmp/metrics.json
       out: /tmp/out.txt
       metrics: /tmp/metrics.json
       commithash: ${COMMITHASH}
