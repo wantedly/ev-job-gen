@@ -43,22 +43,19 @@ spec:
               - "/bin/bash"
               - "-c"
               - >
-                script/evaluate | tee /tmp/out.txt;
-
-                export AWS_ACCESS_KEY_ID=;
-                export AWS_SECRET_ACCESS_KEY=;
-                export AWS_REGION=;
-
-                apt install -y wget;
-                wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
-                tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
-                cp linux-amd64/ev ev;
-
+                script/evaluate | tee /tmp/out.txt && cat /tmp/out.txt > /tmp/metrics.json &&
+                export AWS_ACCESS_KEY_ID= &&
+                export AWS_SECRET_ACCESS_KEY= &&
+                export AWS_REGION= &&
+                apt install -y wget &&
+                wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz &&
+                tar xvzf ev-v1.2.3-linux-amd64.tar.gz &&
+                cp linux-amd64/ev ev &&
                 ./ev upload --branch master \
                             --commit ${COMMITHASH} \
                             --out /tmp/out.txt \
                             --metrics /tmp/metrics.json \
-                            --namespace ml-project-1;
+                            --namespace ml-project-1
             envFrom:
             - secretRef:
               name: dotenv
