@@ -52,6 +52,7 @@ metadata:
     app: ev-job
     role: job
 spec:
+  backoffLimit: 0
   schedule: "5 17 * * *"
   concurrencyPolicy: "Replace"
   suspend: false
@@ -74,10 +75,11 @@ spec:
             app: ev-job
             role: job
         spec:
+
           restartPolicy: Never
           containers:
           - name: ev-job
-            image: some-docker-registory/wantedly/ml-project-1:latest
+            image: some-docker-registory/ml-project-1:latest
             imagePullPolicy: Always
             command:
               - "/bin/bash"
@@ -89,6 +91,7 @@ spec:
                 export AWS_SECRET_ACCESS_KEY=xxx;
                 export AWS_REGION=xxx;
 
+                apt install -y wget;
                 wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
                 tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
                 cp linux-amd64/ev ev;
