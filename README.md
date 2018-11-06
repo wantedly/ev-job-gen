@@ -53,7 +53,6 @@ metadata:
     app: ev-job
     role: job
 spec:
-  backoffLimit: 0
   schedule: "5 17 * * *"
   concurrencyPolicy: "Replace"
   suspend: false
@@ -86,22 +85,19 @@ spec:
               - "/bin/bash"
               - "-c"
               - >
-                script/evaluate | tee /tmp/out.txt;
-
-                export AWS_ACCESS_KEY_ID=xxx;
-                export AWS_SECRET_ACCESS_KEY=xxx;
-                export AWS_REGION=xxx;
-
-                apt install -y wget;
-                wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz;
-                tar xvzf ev-v1.2.3-linux-amd64.tar.gz;
-                cp linux-amd64/ev ev;
-
+                script/evaluate | tee /tmp/out.txt &&
+                export AWS_ACCESS_KEY_ID=xxx &&
+                export AWS_SECRET_ACCESS_KEY=xxx &&
+                export AWS_REGION=xxx &&
+                apt install -y wget &&
+                wget https://github.com/wantedly/ev-cli/releases/download/v1.2.3/ev-v1.2.3-linux-amd64.tar.gz &&
+                tar xvzf ev-v1.2.3-linux-amd64.tar.gz &&
+                cp linux-amd64/ev ev &&
                 ./ev upload --branch master \
                             --commit ${COMMITHASH} \
                             --out /tmp/out.txt \
                             --metrics /tmp/metrics.json \
-                            --namespace ml-project-1;
+                            --namespace ml-project-1
 ```
 
 ## Development
