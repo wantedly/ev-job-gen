@@ -14,6 +14,7 @@ spec:
   suspend: false
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 3
+  startingDeadlineSeconds: 300
   jobTemplate:
     metadata:
       name: ev-job
