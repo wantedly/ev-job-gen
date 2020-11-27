@@ -31,4 +31,6 @@ spec:
             name: ev-job
             app: ev-job
             role: job
+          annotations:
+            cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
         spec: <%= spec %>
